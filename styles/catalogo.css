@@ -1,0 +1,249 @@
+@media (max-width: 600px) {
+    .catalogoEspecie{
+      width: 85vw;
+    }
+    #todosCatalogos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .catalogoEspecie{
+        align-self: flex-start;
+    }
+    #todosCatalogos{
+        margin: 0 20px 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        justify-items: center;
+    }
+}
+
+@media (min-width: 1025px) {
+    .catalogoEspecie{
+        align-self: flex-start;
+    }
+    #todosCatalogos{
+        margin: 0 20px 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+  }
+.catalogoEspecie{
+    gap: 3px;
+    background-color: rgb(0, 0, 0);
+    border: solid 3px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-areas: 
+    "img img img"
+    "img img img"
+    "img img img"
+    "contr contr contr"
+    "nome nome nome"
+    "taxo taxo taxo"
+    "taxo taxo taxo"
+    "local local local";
+}
+.divMidia{
+    grid-area: img;
+    border: 0;
+    background-color: white;
+    padding: 0;
+}
+.imgEspecie{
+    width: 100%;
+    height: 100%;
+}
+.caracteristica{
+    background-color: white;
+}
+.controles{
+    grid-area: contr;
+    display: flex;
+    width: 100%;
+    align-self: flex-start;
+    height: 50px;
+}
+.divOpImagem, .divOpVideo{
+    background-color: white;
+    height: 100%;
+    width: 30%;
+}
+
+.divOpImagemSemVideo{
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    width: 60%;
+}
+
+.buttonOpImagem, .buttonOpVideo{
+    width: 100%;
+    padding: 10px 0 10px 0;
+    border: 0;
+    font-size: 20px;
+    height: 100%;
+    background-color: rgb(211, 211, 211);
+    color: rgb(19, 33, 58);
+}
+.buttonOpImagem:hover, .buttonOpVideo:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+.setas{
+    grid-area: setas;
+    background-color: white;
+    display: flex;
+    flex-grow: 1;
+    height: min-content;
+    display: flex;
+    height: 100%;
+    border-left: solid black 3px;
+}
+.buttonSeta-esquerda, .buttonSeta-direita{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    outline: none; /* Remove o contorno padrão ao focar */
+    -webkit-tap-highlight-color: transparent; /* Remove o efeito de destaque no toque */
+    background-color: rgb(211, 211, 211)
+}
+.buttonSeta-esquerda:hover, .buttonSeta-direita:hover{
+    background-color: #ddd;
+    cursor: pointer;
+}
+.imgSeta{
+    height: 100%;
+}
+.taxonomia{
+    grid-area: taxo;
+    display: grid;
+    grid-template-areas:
+    "fami"
+    "genero";
+    gap: 3px;
+    background-color: black;
+    height: auto;
+    width: 100%;
+}
+.familia{
+    grid-area: fami;
+}
+.genero{
+    grid-area: genero;
+}
+.nomeP{
+    margin: 0;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.buttonOff {
+    width: 100%;
+    padding: 10px 0 10px 0;
+    border: 0;
+    font-size: 20px;
+    height: 100%;
+    background-color: rgb(211, 211, 211);
+    color: rgb(138, 23, 23);
+}
+
+.nomeC{
+    margin: 0;
+    font-size: 17px;
+}
+.nome{
+    grid-area: nome;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.local{
+    grid-area: local;
+    padding: 10px 0 10px 5px;
+    display: flex;
+    align-items: center;
+}
+.genero, .familia{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 0 15px 5px;
+    background-color: white;
+}
+.linkSpan:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.coletaLocal{
+    font-size: 20px;
+    font-weight: bold;
+}
+.pLocal{
+    font-size: 20px;
+    margin: 0 0 0 2px;
+    padding: 0;
+}
+.divSimboloMaps{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+    align-items: center;
+}
+.aSimboloMaps{
+    text-decoration: none;
+    color: inherit;
+}
+.simboloMaps{
+    height: 35px;
+}
+.descricao{
+    grid-area: descri;
+    padding: 0px 0 0px 5px;
+}
+.sumuarioDescri{
+    list-style: none;
+    margin: 10px 0 10px 0;
+    text-align: center;
+    outline: none; /* Remove o contorno padrão ao focar */
+    -webkit-tap-highlight-color: transparent; /* Remove o efeito de destaque no toque */
+}
+.sumuarioDescri:hover{
+    cursor: pointer;
+}
+.pDescri{
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    padding: 0 5px 0 5px;
+}
+.spanTaxo{
+    font-weight: bold;
+    font-size: 20px;
+    flex-grow: 0;
+}
+.linkSpan{
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+    margin-left: 5px;
+    flex-grow: 1;
+}
+.simboloGenero{
+    height: 35px;
+}
+.botaoVoltar{
+    position: relative;
+}
+a{
+    outline: none; /* Remove o contorno padrão ao focar */
+    -webkit-tap-highlight-color: transparent; /* Remove o efeito de destaque no toque */
+}
