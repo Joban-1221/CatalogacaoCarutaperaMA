@@ -1,5 +1,5 @@
 let especiesCatalogo = []
-fetch("Catalogacao dados.xlsx").then(response => response.arrayBuffer()).then(data => {
+fetch("CatalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
     const workbook = XLSX.read(data, { type: 'array' });
 
     // Obtém a primeira planilha
@@ -194,7 +194,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
     //Cria imgSetaEsquerda
     const imgSetaEsquerda = document.createElement("img")
     imgSetaEsquerda.className = "imgSeta"
-    imgSetaEsquerda.src = "imgs/modelo Catalogo/seta-esquerda.png"
+    imgSetaEsquerda.src = "imgs/modeloCatalogo/seta-esquerda.png"
 
     //Adiciona imgSetaEsquerda a divSetas
     buttonSetaEsquerda.appendChild(imgSetaEsquerda)
@@ -215,7 +215,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
     //Cria imgSetaDireita
     const imgSetaDireita = document.createElement("img")
     imgSetaDireita.className = "imgSeta"
-    imgSetaDireita.src = "imgs/modelo Catalogo/seta-direita.png"
+    imgSetaDireita.src = "imgs/modeloCatalogo/seta-direita.png"
 
     //Adiciona imgSetaDireita a divSetas
     buttonSetaDireita.appendChild(imgSetaDireita)
@@ -356,7 +356,7 @@ function gerarDivLocal(localNome, mapsLink) {
     //Criar img com a logo antiga do Maps
     const imgSimboloMaps = document.createElement("img")
     imgSimboloMaps.className = "simboloMaps"
-    imgSimboloMaps.src = "imgs/modelo Catalogo/simboloMaps.png"
+    imgSimboloMaps.src = "imgs/modeloCatalogo/simboloMaps.png"
 
     //Adiciona imgSimboloMaps ao aSimboloMaps
     aSimboloMaps.appendChild(imgSimboloMaps)
