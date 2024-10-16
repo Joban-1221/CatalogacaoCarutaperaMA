@@ -2,7 +2,7 @@
     .catalogoEspecie{
       width: 85vw;
     }
-    #todosCatalogos{
+    #todosCatalogos, #todosCatalogosNaoIdentificado{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -13,7 +13,7 @@
     .catalogoEspecie{
         align-self: flex-start;
     }
-    #todosCatalogos{
+    #todosCatalogos, #todosCatalogosNaoIdentificado{
         margin: 0 20px 0 20px;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -26,7 +26,7 @@
     .catalogoEspecie{
         align-self: flex-start;
     }
-    #todosCatalogos{
+    #todosCatalogos, #todosCatalogosNaoIdentificado{
         margin: 0 20px 0 20px;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -48,6 +48,25 @@
     "taxo taxo taxo"
     "taxo taxo taxo"
     "local local local";
+}
+.catalogoEspecieNaoIdentificado{
+    gap: 3px;
+    background-color: rgb(0, 0, 0);
+    border: solid 3px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-areas: 
+    "img img img"
+    "img img img"
+    "img img img"
+    "contr contr contr";
+}
+.titleNaoIdentificado{
+    text-align: center;
+    background-color: rgb(239, 152, 152);
+    padding: 20px 0 20px 0;
+    border-top: solid 3px black;
+    border-bottom: solid 3px black;
 }
 .divMidia{
     grid-area: img;
@@ -74,7 +93,6 @@
     height: 100%;
     width: 30%;
 }
-
 .divOpImagemSemVideo{
     background-color: white;
     width: 100%;
@@ -230,12 +248,15 @@
     font-size: 20px;
     flex-grow: 0;
 }
-.linkSpan{
+.linkSpan, .linkSpanInvalido{
     text-decoration: none;
     color: inherit;
     font-size: 20px;
     margin-left: 5px;
     flex-grow: 1;
+}
+.linkSpanInvalido{
+    pointer-events: none;
 }
 .simboloGenero{
     height: 35px;

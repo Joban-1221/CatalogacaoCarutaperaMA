@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogo</title>
+    <link rel="stylesheet" href="styles/cabecalho.css">
+    <link rel="stylesheet" href="styles/catalogo.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+    <header id="cabeçalho">
+        <div id="containerTitle">
+            <h1 id="title">Catalogação da biodiverdidade de Carutapera</h1>
+        </div>
+
+        <nav id="menu">
+            <a href="index.html" class="menuOpc" id="menuPlantas">
+                <img src="imgs/icones cabeçalho/plantaIcon.png" alt="" class="imgIcon">
+                <p class="textIcon">Especies Identificadas</p>
+            </a>
+            <a href="especiesNaoIdentificadas.html" class="menuOpc" id="menuAnimais">
+                <img src="imgs/icones cabeçalho/animalIcon.png" alt="" class="imgIcon">
+                <p class="textIcon">Especies Não Identificadas</p>
+            </a>
+        </nav>
+
+    </header>
+    <section id="todosCatalogosNaoIdentificado">
+    </section>
+    <script src="gerarItemNaoIdentificado.js">
+    </script>
+</body>
+
+</html>
