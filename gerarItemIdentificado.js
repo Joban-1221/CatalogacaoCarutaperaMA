@@ -1,4 +1,3 @@
-
 let especiesCatalogo = []
 fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
     const workbook = XLSX.read(data, { type: 'array' });
@@ -82,6 +81,7 @@ function alterarMidia(modelo, modeloId, direcao) {
 
             imgTeste.onerror = function () {
                 console.log("Está na ultima mídia.");
+                alert("Essa é a ultima Imagem")
                 return
             }
 
@@ -92,10 +92,14 @@ function alterarMidia(modelo, modeloId, direcao) {
         } else if (extensao === "mp4") {
             // Verifica se o arquivo de vídeo existe
             let videoTeste = elementoPorId(modeloId, "videoPlayer");
+            const videoTesteSrcBuckap = videoTeste.src
             videoTeste.src = novaSrc;
+            let existe = true
 
             videoTeste.onerror = function () {
                 console.log("Erro ao carregar o vídeo:", novaSrc);
+                videoTeste.src = videoTesteSrcBuckap
+                alert("Essa é o ultimo Vídeo")
                 return
             };
 
@@ -426,13 +430,14 @@ async function gerarCatalogo(especie) {
 }
 
 
-function gerarCatalogoNaoIdentificado(especie) {
+async function gerarCatalogoNaoIdentificado(especie) {
     const todosCatalogos = document.getElementById("todosCatalogosNaoIdentificado")
     const divGridCatalogo = document.createElement("div")
     divGridCatalogo.className = "catalogoEspecieNaoIdentificado"
 
     //Adicionar imagem
-    divGridCatalogo.appendChild(gerarDivMidia(especie.modeloId, especie.imgSrc))
+    const divMidia = await gerarDivMidia(especie.modeloId, especie.imgSrc);
+    divGridCatalogo.appendChild(divMidia);
 
     //Adiciona controles
     divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc))
