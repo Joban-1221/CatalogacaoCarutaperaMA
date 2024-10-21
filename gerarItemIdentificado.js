@@ -110,25 +110,35 @@ function alterarMidia(modelo, modeloId, direcao) {
 }
 
 
-function gerarDivMidia(modeloId, imgLink) {
+async function gerarDivMidia(modeloId, imgLink) {
+    // Cria divMidia
+    const divMidia = document.createElement("div");
+    divMidia.className = "divMidia";
+    divMidia.id = gerarId(modeloId, "divMidia");
 
-    //Cria divMidia
-    const divMidia = document.createElement("div")
-    divMidia.className = "divMidia"
-    divMidia.id = gerarId(modeloId, "divMidia")
+    // Cria img com o src e o id
+    const img = document.createElement("img");
+    img.className = "imgEspecie";
+    img.id = gerarId(modeloId, "img");
 
-    //Cria img com o src e o id
-    const img = document.createElement("img")
-    img.className = "imgEspecie"
-    img.src = imgLink
-    img.id = gerarId(modeloId, "img")
+    // Aguarda o carregamento da imagem
+    img.src = imgLink; // Define o src antes de esperar
+    await new Promise((resolve, reject) => {
+        img.onload = () => {
+            resolve(); // Resolve a promessa quando a imagem carrega
+        };
+        img.onerror = () => {
+            reject(new Error("Erro ao carregar a imagem.")); // Rejeita a promessa se ocorrer um erro
+        };
+    });
 
-    //Adiciona img a divMidia
-    divMidia.appendChild(img)
+    // Adiciona img a divMidia
+    divMidia.appendChild(img);
 
-    //Retorna divMidia
-    return divMidia
+    // Retorna divMidia
+    return divMidia;
 }
+
 
 function gerarDivControles(modeloId, imgSrc, videoSrc) {
     //Criar divControles
@@ -388,31 +398,33 @@ function gerarDivLocal(localNome, mapsLink) {
     return divLocal
 }
 
-function gerarCatalogo(especie) {
-    const todosCatalogos = document.getElementById("todosCatalogos")
-    const divGridCatalogo = document.createElement("div")
-    divGridCatalogo.className = "catalogoEspecie"
+async function gerarCatalogo(especie) {
+    const todosCatalogos = document.getElementById("todosCatalogos");
+    const divGridCatalogo = document.createElement("div");
+    divGridCatalogo.className = "catalogoEspecie";
 
-    //Adicionar imagem
-    divGridCatalogo.appendChild(gerarDivMidia(especie.modeloId, especie.imgSrc))
+    // Adicionar imagem
+    const divMidia = await gerarDivMidia(especie.modeloId, especie.imgSrc);
+    divGridCatalogo.appendChild(divMidia);
 
-    //Adiciona controles
-    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc))
+    // Adiciona controles
+    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc));
 
-    //Adicionar div com NomeP, NomeC e descricao
-    divGridCatalogo.appendChild(gerarDivNomeDescr(especie.nomeP, especie.nomeC, especie.descricao))
+    // Adicionar div com NomeP, NomeC e descricao
+    divGridCatalogo.appendChild(gerarDivNomeDescr(especie.nomeP, especie.nomeC, especie.descricao));
 
-    //Adiciona div taxonomia
-    divGridCatalogo.appendChild(gerarDivTaxonomia(especie.familia, especie.genero))
+    // Adiciona div taxonomia
+    divGridCatalogo.appendChild(gerarDivTaxonomia(especie.familia, especie.genero));
 
-    //Adiciona div local
-    divGridCatalogo.appendChild(gerarDivLocal(especie.local, especie.localLink))
+    // Adiciona div local
+    divGridCatalogo.appendChild(gerarDivLocal(especie.local, especie.localLink));
 
-    //Adicionar o item ao catalogo
-    todosCatalogos.appendChild(divGridCatalogo)
+    // Adicionar o item ao catalogo
+    todosCatalogos.appendChild(divGridCatalogo);
 
-    console.log(divGridCatalogo)
+    console.log(divGridCatalogo);
 }
+
 
 function gerarCatalogoNaoIdentificado(especie) {
     const todosCatalogos = document.getElementById("todosCatalogosNaoIdentificado")
