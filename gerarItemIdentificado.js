@@ -1,6 +1,6 @@
 
 let especiesCatalogo = []
-fetch("https://github.com/Joban-1221/Joban-1221/blob/main/catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
+fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
     const workbook = XLSX.read(data, { type: 'array' });
 
     // Obtém a primeira planilha
