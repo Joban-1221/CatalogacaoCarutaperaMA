@@ -1,4 +1,4 @@
-async function gerarItensIdentificados() {
+function gerarItensIdentificados() {
     let especiesCatalogo = []
     fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
         const workbook = XLSX.read(data, { type: 'array' });
@@ -9,7 +9,9 @@ async function gerarItensIdentificados() {
         // Converte a planilha para JSON
         especiesCatalogo = XLSX.utils.sheet_to_json(firstSheet);
 
-        asyncForEachCatalogo(especiesCatalogo)
+        especiesCatalogo.forEach(element => {
+            gerarCatalogo(element)
+        });
         console.log(especiesCatalogo)
 
     })
@@ -17,12 +19,6 @@ async function gerarItensIdentificados() {
             console.error('Erro ao carregar o arquivo Excel:', error);
         });
 }
-
-async function asyncForEachCatalogo(array) {
-    for (let index = 0; index < array.length; index++) {
-      await gerarCatalogo(array[index]);
-    }
-  }
 
 function gerarId(modeloId, nomeElemento) {
     const id = `${nomeElemento}${modeloId}`
@@ -436,13 +432,13 @@ async function gerarCatalogo(especie) {
 }
 
 
-async function gerarCatalogoNaoIdentificado(especie) {
+function gerarCatalogoNaoIdentificado(especie) {
     const todosCatalogos = document.getElementById("todosCatalogosNaoIdentificado")
     const divGridCatalogo = document.createElement("div")
     divGridCatalogo.className = "catalogoEspecieNaoIdentificado"
 
     //Adicionar imagem
-    const divMidia = await gerarDivMidia(especie.modeloId, especie.imgSrc);
+    const divMidia = gerarDivMidia(especie.modeloId, especie.imgSrc);
     divGridCatalogo.appendChild(divMidia);
 
     //Adiciona controles
@@ -452,8 +448,8 @@ async function gerarCatalogoNaoIdentificado(especie) {
     todosCatalogos.appendChild(divGridCatalogo)
 }
 
-if(window.location.pathname === '/' || window.location.pathname === '/index.html'){
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
     gerarItensIdentificados()
-}else if(window.location.pathname === 'especiesNaoIdentificadas'){
+} else if (window.location.pathname === 'especiesNaoIdentificadas') {
     gerarCatalogoNaoIdentificado()
 }
