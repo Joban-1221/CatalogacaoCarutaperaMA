@@ -387,32 +387,6 @@ function gerarDivLocal(localNome, mapsLink) {
     return divLocal
 }
 
-function gerarCatalogo(especie) {
-    const todosCatalogos = document.getElementById("todosCatalogos")
-    const divGridCatalogo = document.createElement("div")
-    divGridCatalogo.className = "catalogoEspecie"
-
-    //Adicionar imagem
-    divGridCatalogo.appendChild(gerarDivMidia(especie.modeloId, especie.imgSrc))
-
-    //Adiciona controles
-    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc))
-
-    //Adicionar div com NomeP, NomeC e descricao
-    divGridCatalogo.appendChild(gerarDivNomeDescr(especie.nomeP, especie.nomeC, especie.descricao))
-
-    //Adiciona div taxonomia
-    divGridCatalogo.appendChild(gerarDivTaxonomia(especie.familia, especie.genero))
-
-    //Adiciona div local
-    divGridCatalogo.appendChild(gerarDivLocal(especie.local, especie.localLink))
-
-    //Adicionar o item ao catalogo
-    todosCatalogos.appendChild(divGridCatalogo)
-
-    console.log(divGridCatalogo)
-}
-
 async function gerarCatalogoNaoIdentificado(especie) {
     const todosCatalogos = document.getElementById("todosCatalogosNaoIdentificado")
     const divGridCatalogo = document.createElement("div")
