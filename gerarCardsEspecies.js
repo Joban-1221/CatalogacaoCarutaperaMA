@@ -103,6 +103,7 @@ async function gerarDivMidia(modeloId, imgLink) {
     // Cria img com o src e o id
     const img = document.createElement("img");
     img.className = "imgEspecie";
+    img.loading = "lazy"
     img.id = gerarId(modeloId, "img");
 
     // Aguarda o carregamento da imagem
