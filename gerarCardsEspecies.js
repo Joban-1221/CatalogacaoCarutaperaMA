@@ -39,6 +39,7 @@ function alterarTipo(modeloId, tipo, caminho) {
 }
 
 function alterarMidia(modelo, modeloId, direcao) {
+    alternarButtons(modeloId, "OFF")
     let diretorio = modelo.src;
     console.log(modelo.src)
     let match = diretorio.match(/\/(\d+)\.(jpg|mp4)$/); // Adaptado para capturar jpg e mp4
@@ -49,6 +50,7 @@ function alterarMidia(modelo, modeloId, direcao) {
 
         if (index < 1) {
             console.log("Está na primeira mídia.");
+            alternarButtons(modeloId, "ON")
             return;
         }
 
@@ -62,6 +64,7 @@ function alterarMidia(modelo, modeloId, direcao) {
             imgTeste.onerror = function () {
                 console.log("Está na ultima mídia.");
                 alert("Essa é a ultima Imagem")
+                alternarButtons(modeloId, "ON")
                 return
             }
 
@@ -80,6 +83,7 @@ function alterarMidia(modelo, modeloId, direcao) {
                 console.log("Erro ao carregar o vídeo:", novaSrc);
                 videoTeste.src = videoTesteSrcBuckap
                 alert("Essa é o ultimo Vídeo")
+                alternarButtons(modeloId, "ON")
                 return
             };
 
@@ -91,6 +95,7 @@ function alterarMidia(modelo, modeloId, direcao) {
 
         }
     }
+    alternarButtons(modeloId, "ON")
 }
 
 
@@ -124,7 +129,7 @@ async function gerarDivMidia(modeloId, imgLink) {
 }
 
 
-function gerarDivControles(modeloId, imgSrc, videoSrc) {
+function gerarDivControles(modeloId, imgSrc, videoSrc, modeloId) {
     //Criar divControles
     const divControles = document.createElement("div")
     divControles.className = "controles caracteristica"
@@ -137,6 +142,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
     const buttonOpImagem = document.createElement("button")
     buttonOpImagem.className = "buttonOpImagem"
     buttonOpImagem.innerHTML = "Imagem"
+    buttonOpImagem.id = gerarId(modeloId, "buttonOpImagem")
 
     //Adiciona o evento click a buttonOpImagem
     buttonOpImagem.addEventListener("click", function () {
@@ -157,6 +163,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
         const buttonOpVideo = document.createElement("button")
         buttonOpVideo.className = "buttonOpVideo"
         buttonOpVideo.innerHTML = "Vídeo"
+        buttonOpVideo.id = gerarId(modeloId, "buttonOpVideo")
 
         //Adiciona o evento click a buttonOpVideo
         buttonOpVideo.addEventListener("click", function () {
@@ -176,6 +183,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
     //Cria buttonSetaEsquerda
     const buttonSetaEsquerda = document.createElement("button")
     buttonSetaEsquerda.className = "buttonSeta-esquerda"
+    buttonSetaEsquerda.id = gerarId(modeloId, "buttonSetaEsquerda")
 
     //Adiciona o evento Click a buttonSetaEsquerda
     buttonSetaEsquerda.addEventListener("click", function () {
@@ -197,6 +205,7 @@ function gerarDivControles(modeloId, imgSrc, videoSrc) {
     //Cria buttonSetaDireita
     const buttonSetaDireita = document.createElement("button")
     buttonSetaDireita.className = "buttonSeta-direita"
+    buttonSetaDireita.id = gerarId(modeloId, "buttonSetaDireita")
 
     //Adiciona o evento Click a buttonSetaDireita
     buttonSetaDireita.addEventListener("click", function () {
@@ -382,6 +391,35 @@ function gerarDivLocal(localNome, mapsLink) {
     return divLocal
 }
 
+function alternarButtons(modeloId, modo) {
+    const botaoDireito = elementoPorId(modeloId, "buttonSetaDireita")
+    const botaoEsquerda = elementoPorId(modeloId, "buttonSetaEsquerda")
+    const botaoImagem = elementoPorId(modeloId, "buttonOpImagem")
+    const botaoVideo = elementoPorId(modeloId, "buttonOpVideo")
+
+    if (modo === "OFF") {
+        botaoDireito.disabled = true
+        botaoEsquerda.disabled = true
+        botaoImagem.disabled = true
+        if(botaoVideo){botaoVideo.disabled = true}
+
+        botaoDireito.className = "buttonSeta-direitaOFF"
+        botaoEsquerda.className = "buttonSeta-esquerdaOFF"
+        botaoImagem.className = "buttonOpImagemOFF"
+        if(botaoVideo){botaoVideo.className = "buttonOpVideoOFF"}
+    } else if(modo === "ON"){
+        botaoDireito.disabled = false
+        botaoEsquerda.disabled = false
+        botaoImagem.disabled = false
+        if(botaoVideo){botaoVideo.disabled = false}
+
+        botaoDireito.className = "buttonSeta-direita"
+        botaoEsquerda.className = "buttonSeta-esquerda"
+        botaoImagem.className = "buttonOpImagem"
+        if(botaoVideo){botaoVideo.className = "buttonOpVideo"}
+    }
+}
+
 async function gerarCatalogo(especie) {
     const todosCatalogos = document.getElementById("todosCatalogos");
     todosCatalogos.innerHTML = ""
@@ -393,7 +431,7 @@ async function gerarCatalogo(especie) {
     divGridCatalogo.appendChild(divMidia);
 
     // Adiciona controles
-    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc));
+    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc, especie.modeloId));
 
     // Adicionar div com NomeP, NomeC e descricao
     divGridCatalogo.appendChild(gerarDivNomeDescr(especie.nomeP, especie.nomeC, especie.descricao));
@@ -420,7 +458,7 @@ async function gerarCatalogoNaoIdentificado(especie) {
     divGridCatalogo.appendChild(divMidia);
 
     //Adiciona controles
-    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc))
+    divGridCatalogo.appendChild(gerarDivControles(especie.modeloId, especie.imgSrc, especie.videoSrc, especie.modeloId))
 
     //Adicionar o item ao catalogo
     todosCatalogos.appendChild(divGridCatalogo)
