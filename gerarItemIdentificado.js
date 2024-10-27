@@ -9,7 +9,9 @@ fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(dat
     especiesCatalogo = XLSX.utils.sheet_to_json(firstSheet);
 
     filtro("alfaDesc")
-    forEach()
+    especiesCatalogo.forEach(element => {
+        gerarCatalogo(element)
+    });
 })
     .catch(error => {
         console.error('Erro ao carregar o arquivo Excel:', error);
@@ -20,12 +22,5 @@ function filtro(tipo){
         especiesCatalogo.sort((a, b) => a.nomeP.localeCompare(b.nomeP));
     } else if(tipo === "alfaDesc"){
         especiesCatalogo.sort((a, b) => b.nomeP.localeCompare(a.nomeP));
-    }
-}
-
-async function forEach(){
-    for(let index = 0; index < especiesCatalogo.length; index++){
-        await gerarCatalogo(especiesCatalogo[index])
-    console.log(especiesCatalogo)
     }
 }
