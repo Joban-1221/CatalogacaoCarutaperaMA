@@ -38,7 +38,7 @@ function alterarTipo(modeloId, tipo, caminho) {
     }
 }
 
-function alterarMidia(modelo, modeloId, direcao) {
+async function alterarMidia(modelo, modeloId, direcao) {
     alternarButtons(modeloId, "OFF")
     let diretorio = modelo.src;
     console.log(modelo.src)
@@ -61,16 +61,19 @@ function alterarMidia(modelo, modeloId, direcao) {
             let imgTeste = new Image();
             imgTeste.src = novaSrc;
 
-            imgTeste.onerror = function () {
-                console.log("Está na ultima mídia.");
-                alert("Essa é a ultima Imagem")
-                alternarButtons(modeloId, "ON")
-                return
-            }
-
-            imgTeste.onload = function () {
-                modelo.src = novaSrc; // Atualiza a imagem se existir
-            }
+            await new Promise((resolve, reject) => {
+                imgTeste.onload = () => {
+                    modelo.src = novaSrc;
+                    resolve(); // Resolve a promessa quando a imagem carrega
+                };
+                imgTeste.onerror = () => {
+                    console.log("Está na ultima mídia.");
+                    alert("Essa é a ultima Imagem")
+                    alternarButtons(modeloId, "ON")
+                    reject(new Error("Erro ao carregar a imagem.")); // Rejeita a promessa se ocorrer um erro
+                    return
+                };
+            });
 
         } else if (extensao === "mp4") {
             // Verifica se o arquivo de vídeo existe
@@ -401,22 +404,22 @@ function alternarButtons(modeloId, modo) {
         botaoDireito.disabled = true
         botaoEsquerda.disabled = true
         botaoImagem.disabled = true
-        if(botaoVideo){botaoVideo.disabled = true}
+        if (botaoVideo) { botaoVideo.disabled = true }
 
         botaoDireito.className = "buttonSeta-direitaOFF"
         botaoEsquerda.className = "buttonSeta-esquerdaOFF"
         botaoImagem.className = "buttonOpImagemOFF"
-        if(botaoVideo){botaoVideo.className = "buttonOpVideoOFF"}
-    } else if(modo === "ON"){
+        if (botaoVideo) { botaoVideo.className = "buttonOpVideoOFF" }
+    } else if (modo === "ON") {
         botaoDireito.disabled = false
         botaoEsquerda.disabled = false
         botaoImagem.disabled = false
-        if(botaoVideo){botaoVideo.disabled = false}
+        if (botaoVideo) { botaoVideo.disabled = false }
 
         botaoDireito.className = "buttonSeta-direita"
         botaoEsquerda.className = "buttonSeta-esquerda"
         botaoImagem.className = "buttonOpImagem"
-        if(botaoVideo){botaoVideo.className = "buttonOpVideo"}
+        if (botaoVideo) { botaoVideo.className = "buttonOpVideo" }
     }
 }
 
