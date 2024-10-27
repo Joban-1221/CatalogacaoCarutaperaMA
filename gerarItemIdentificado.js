@@ -8,12 +8,8 @@ fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(dat
     // Converte a planilha para JSON
     especiesCatalogo = XLSX.utils.sheet_to_json(firstSheet);
 
-    filtro("alfaCres")
-    especiesCatalogo.forEach(element => {
-        gerarCatalogo(element)
-    });
-    console.log(especiesCatalogo)
-
+    filtro("alfaDesc")
+    forEach()
 })
     .catch(error => {
         console.error('Erro ao carregar o arquivo Excel:', error);
@@ -22,5 +18,14 @@ fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(dat
 function filtro(tipo){
     if(tipo === "alfaCres"){
         especiesCatalogo.sort((a, b) => a.nomeP.localeCompare(b.nomeP));
+    } else if(tipo === "alfaDesc"){
+        especiesCatalogo.sort((a, b) => b.nomeP.localeCompare(a.nomeP));
+    }
+}
+
+async function forEach(){
+    for(let index = 0; index < especiesCatalogo.length; index++){
+        await gerarCatalogo(especiesCatalogo[index])
+    console.log(especiesCatalogo)
     }
 }
