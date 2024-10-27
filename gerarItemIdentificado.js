@@ -1,37 +1,64 @@
+//Array que vai conter todos as especies identificadas em forma de objetos
 let especiesCatalogo = []
-fetch("catalogacaoDados.xlsx").then(response => response.arrayBuffer()).then(data => {
-    const workbook = XLSX.read(data, { type: 'array' });
 
-    // Obtém a primeira planilha
-    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+// Faz uma requisição para obter o arquivo "catalogacaoDados.xlsx"
+fetch("catalogacaoDados.xlsx")
 
-    // Converte a planilha para JSON
-    especiesCatalogo = XLSX.utils.sheet_to_json(firstSheet);
+    // Quando a resposta chega, converte o conteúdo do arquivo em um ArrayBuffer, que representa os dados binários
+    .then(response => response.arrayBuffer())
 
-    filtro("alfaCres")
-    especiesCatalogo.forEach(element => {
-        gerarCatalogo(element)
-    });
-    console.log(especiesCatalogo)
+    // Após a conversão, passa o ArrayBuffer para a função callback
+    .then(data => {
 
-})
+        // Lê o conteúdo binário do ArrayBuffer usando a biblioteca XLSX e interpreta o arquivo como um workbook Excel
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Obtém a primeira planilha (aba) do workbook usando o nome da primeira aba no array SheetNames
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+
+        // Converte a planilha em um array de objetos JSON, onde cada linha da planilha vira um objeto, e as colunas se tornam propriedades
+        especiesCatalogo = XLSX.utils.sheet_to_json(firstSheet);
+
+        // Aplica um filtro aos dados para organizá-los em ordem alfabética crescente, utilizando a função "filtro"
+        filtro("alfaCres");
+
+        // Itera por cada item (espécie) no array "especiesCatalogo" e chama a função "gerarCatalogo" para cada elemento
+        especiesCatalogo.forEach(element => {
+            gerarCatalogo(element);
+        });
+
+        // Exibe o conteúdo do catálogo (especiesCatalogo) no console para verificação e depuração
+        console.log(especiesCatalogo);
+    })
+    // Trata erros que possam ocorrer durante o processo de carregamento ou manipulação do arquivo
     .catch(error => {
+        // Exibe uma mensagem de erro no console se houver falha ao carregar ou processar o arquivo Excel
         console.error('Erro ao carregar o arquivo Excel:', error);
     });
 
-function filtro(tipo){
-    if(tipo === "alfaCres"){
+function filtro(tipo) {
+    // Verifica se o argumento 'tipo' passado para a função é "alfaCres"
+    if (tipo === "alfaCres") {
+        // Se for "alfaCres", a função utiliza o método sort() para ordenar o array 'especiesCatalogo'
+        // Ordena os elementos em ordem alfabética crescente com base na propriedade 'nomeP' de cada objeto
         especiesCatalogo.sort((a, b) => a.nomeP.localeCompare(b.nomeP));
     }
 }
+
 function gerarId(modeloId, nomeElemento) {
-    const id = `${nomeElemento}${modeloId}`
-    return id
+    // Cria uma string que combina o 'nomeElemento' com 'modeloId'
+    const id = `${nomeElemento}${modeloId}`;
+
+    // Retorna a string gerada como o novo ID
+    return id;
 }
 
 function elementoPorId(modeloId, nomeElemento) {
-    return document.getElementById(gerarId(modeloId, nomeElemento))
+    // Chama a função 'gerarId' para criar um ID único baseado em 'modeloId' e 'nomeElemento'
+    // O ID gerado é passado como argumento para document.getElementById
+    return document.getElementById(gerarId(modeloId, nomeElemento));
 }
+
 
 function alterarTipo(modeloId, tipo, caminho) {
     if (tipo === "img") {
@@ -63,11 +90,14 @@ function alterarTipo(modeloId, tipo, caminho) {
         divMidia.appendChild(videoPlayer)
     }
 }
+function filtrarCaminho(diretorio) {
+    return diretorio.match(/\/(\d+)\.(jpg|mp4)$/) // Adaptado para capturar jpg e mp4
+}
 
 function alterarMidia(modelo, modeloId, direcao) {
     let diretorio = modelo.src;
     console.log(modelo.src)
-    let match = diretorio.match(/\/(\d+)\.(jpg|mp4)$/); // Adaptado para capturar jpg e mp4
+    let match = filtrarCaminho(diretorio)
 
     if (match) {
         let index = parseInt(match[1]) + direcao;
@@ -129,6 +159,7 @@ async function gerarDivMidia(modeloId, imgLink) {
     // Cria img com o src e o id
     const img = document.createElement("img");
     img.className = "imgEspecie";
+    img.setAttribute("loading", "lazy");
     img.id = gerarId(modeloId, "img");
 
     // Aguarda o carregamento da imagem
@@ -144,6 +175,7 @@ async function gerarDivMidia(modeloId, imgLink) {
 
     // Adiciona img a divMidia
     divMidia.appendChild(img);
+
 
     // Retorna divMidia
     return divMidia;
