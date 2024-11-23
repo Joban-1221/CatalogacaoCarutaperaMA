@@ -51,3 +51,32 @@ body{
     font-weight: bold;
     margin: 0;
 }
+#menuNav{
+    display: flex;
+    flex-grow: 1;
+}
+#divOrganizador{
+    display: flex;
+    border: solid black 2px;
+    border-right: none;
+    padding: 0 10px 0 10px;
+}
+#divFiltro, #divPesquisa{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+#divPesquisa{
+    margin: 0 10px 0 10px;
+}
+#buttonPesquisar{
+    display: flex;
+    height: 20px;
+    width: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+}
+.imgIcon2{
+    height: 100%;
+}

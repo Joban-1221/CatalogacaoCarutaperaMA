@@ -14,19 +14,40 @@
 <body>
     <header id="cabeçalho">
         <div id="containerTitle">
-            <h1 id="title">Catalogação da biodiverdidade de Carutapera</h1>
+            <h1 id="title">Catalogação da Biodiverdidade de Carutapera</h1>
         </div>
 
-        <nav id="menu">
-            <a href="index.html" class="menuOpc" id="menuPlantas">
-                <img src="imgs/icones cabeçalho/plantaIcon.png" alt="" class="imgIcon">
-                <p class="textIcon">Especies Identificadas</p>
-            </a>
-            <a href="especiesNaoIdentificadas.html" class="menuOpc" id="menuAnimais">
-                <img src="imgs/icones cabeçalho/animalIcon.png" alt="" class="imgIcon">
-                <p class="textIcon">Especies Não Identificadas</p>
-            </a>
-        </nav>
+        <div id="menu">
+            <nav id="menuNav">
+                <a href="index.html" class="menuOpc" id="menuPlantas">
+                    <img src="imgs/icones cabeçalho/plantaIcon.png" alt="" class="imgIcon">
+                    <p class="textIcon">Especies Identificadas</p>
+                </a>
+                <a href="especiesNaoIdentificadas.html" class="menuOpc" id="menuAnimais">
+                    <img src="imgs/icones cabeçalho/animalIcon.png" alt="" class="imgIcon">
+                    <p class="textIcon">Especies Não Identificadas</p>
+                </a>
+            </nav>
+            <div id="divOrganizador">
+                <div id="divFiltro">
+                    <img src="/imgs/icones cabeçalho/filtro.webp" class="imgIcon">
+                    <Label for="filtroSelect">Filtro: </Label>
+                    <select id="filtroSelect">
+                        <option value="">Nenhum</option>
+                        <option value="alfaCres">Crescente</option>
+                        <option value="alfaDesc">Decrescente</option>
+                        <option value="animal">Animal</option>
+                        <option value="planta">Planta</option>
+                        <option value="fungi">Cogumelos</option>
+                    </select>
+                </div>
+                <div id="divPesquisa">
+                    <label for="pesquisa">Pesquisar: </label>
+                    <input type="text" name="" id="pesquisa">
+                    <button id="buttonPesquisar"><img src="/imgs/icones cabeçalho/lupa.png" class="imgIcon2"></button>
+                </div>
+            </div>
+        </div>
     </header>
     <section id="todosCatalogos">
     </section>
